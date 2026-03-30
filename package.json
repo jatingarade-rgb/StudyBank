@@ -1,0 +1,12 @@
+{
+  "name": "studybank",
+  "version": "1.0.0",
+  "description": "Textbook Answer Bank for Class 9-12",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

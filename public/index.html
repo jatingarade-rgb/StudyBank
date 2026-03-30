@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>StudyBank — NCERT & Textbook Answers</title>
+<meta name="description" content="Free textbook answers for Class 9, 10, 11, 12 — CBSE & Maharashtra Board"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0c0f1a;
+  --surface:#141828;
+  --card:#1b2035;
+  --border:#252d45;
+  --accent:#6c63ff;
+  --accent2:#ff6584;
+  --gold:#fbbf24;
+  --text:#e8eaf6;
+  --muted:#8892b0;
+  --green:#10b981;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* NAV */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:64px;
+  background:rgba(12,15,26,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;
+}
+.nav-logo{
+  font-family:'Fraunces',serif;font-size:22px;font-weight:900;
+  background:linear-gradient(135deg,#6c63ff,#ff6584);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{
+  color:var(--muted);font-size:14px;text-decoration:none;
+  font-weight:500;transition:color .2s;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-admin{
+  background:var(--border);color:var(--muted)!important;
+  padding:6px 16px;border-radius:8px;font-size:13px!important;
+}
+.nav-admin:hover{background:var(--accent)!important;color:#fff!important;}
+
+/* HERO */
+.hero{
+  min-height:88vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:60px 20px;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(108,99,255,.18) 0%,transparent 65%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(255,101,132,.1) 0%,transparent 65%);
+  top:30%;right:10%;pointer-events:none;
+}
+.hero-tag{
+  display:inline-block;
+  background:rgba(108,99,255,.15);
+  border:1px solid rgba(108,99,255,.3);
+  color:#a5b4fc;
+  padding:6px 18px;border-radius:999px;
+  font-size:13px;font-weight:500;letter-spacing:1px;
+  margin-bottom:24px;
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(40px,7vw,80px);
+  font-weight:900;line-height:1.08;
+  margin-bottom:20px;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,#6c63ff,#ff6584);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{
+  font-size:18px;color:var(--muted);font-weight:300;
+  max-width:520px;margin:0 auto 40px;line-height:1.6;
+}
+
+/* SEARCH BAR */
+.search-wrap{
+  width:100%;max-width:640px;margin:0 auto 56px;
+  position:relative;
+}
+.search-wrap input{
+  width:100%;padding:18px 60px 18px 24px;
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  font-family:'Outfit',sans-serif;
+  font-size:17px;color:var(--text);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.search-wrap input::placeholder{color:var(--muted);}
+.search-wrap input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(108,99,255,.15);
+}
+.search-icon{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  font-size:22px;cursor:pointer;
+  background:var(--accent);
+  border:none;color:#fff;
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.search-icon:hover{background:#5046e4;}
+
+/* SEARCH RESULTS DROPDOWN */
+.search-results{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  z-index:100;display:none;
+}
+.search-results.open{display:block;}
+.sr-item{
+  padding:14px 20px;cursor:pointer;
+  border-bottom:1px solid var(--border);
+  transition:background .15s;
+}
+.sr-item:last-child{border-bottom:none;}
+.sr-item:hover{background:var(--surface);}
+.sr-item .sr-q{font-size:14px;font-weight:500;margin-bottom:4px;}
+.sr-item .sr-meta{font-size:12px;color:var(--muted);}
+.sr-none{padding:20px;text-align:center;color:var(--muted);font-size:14px;}
+
+/* CLASS BUTTONS */
+.class-label{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:20px;font-weight:600;
+}
+.class-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;max-width:700px;width:100%;margin:0 auto;
+}
+@media(max-width:600px){.class-grid{grid-template-columns:repeat(2,1fr);}}
+
+.class-btn{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  padding:28px 20px;
+  cursor:pointer;transition:all .25s;
+  display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+  position:relative;overflow:hidden;
+}
+.class-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity .25s;
+}
+.class-btn:hover{
+  border-color:var(--accent);
+  transform:translateY(-4px);
+  box-shadow:0 16px 40px rgba(108,99,255,.25);
+}
+.class-btn:hover::before{opacity:.08;}
+.class-btn .cb-num{
+  font-family:'Fraunces',serif;
+  font-size:36px;font-weight:900;
+  background:linear-gradient(135deg,#6c63ff,#ff6584);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  position:relative;
+}
+.class-btn .cb-label{
+  font-size:13px;color:var(--muted);font-weight:500;
+  position:relative;
+}
+.class-btn .cb-count{
+  font-size:11px;color:var(--accent);font-weight:600;
+  background:rgba(108,99,255,.12);
+  padding:2px 10px;border-radius:999px;
+  position:relative;
+}
+
+/* BREADCRUMB */
+.breadcrumb{
+  display:flex;align-items:center;gap:8px;
+  flex-wrap:wrap;
+  padding:16px 24px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  font-size:13px;color:var(--muted);
+}
+.bc-item{cursor:pointer;transition:color .2s;}
+.bc-item:hover{color:var(--accent);}
+.bc-sep{color:var(--border);}
+.bc-current{color:var(--text);font-weight:600;}
+
+/* FLOW PAGE */
+.flow-page{display:none;min-height:100vh;}
+.flow-page.active{display:block;}
+.flow-header{
+  padding:40px 40px 20px;
+  max-width:900px;margin:0 auto;
+}
+.flow-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(22px,4vw,36px);font-weight:700;
+  margin-bottom:6px;
+}
+.flow-sub{font-size:14px;color:var(--muted);}
+
+/* OPTION GRID */
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:14px;
+  padding:20px 40px 60px;
+  max-width:900px;margin:0 auto;
+}
+.opt-card{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  padding:22px 20px;
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;align-items:center;gap:14px;
+}
+.opt-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(108,99,255,.2);
+}
+.opt-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(108,99,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.opt-text{font-size:15px;font-weight:500;line-height:1.3;}
+.opt-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* QUESTION LIST */
+.q-list{
+  padding:20px 40px 60px;
+  max-width:900px;margin:0 auto;
+  display:flex;flex-direction:column;gap:12px;
+}
+.q-item{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  padding:20px 24px;
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;align-items:flex-start;gap:16px;
+}
+.q-item:hover{border-color:var(--accent);box-shadow:0 6px 24px rgba(108,99,255,.15);}
+.q-num{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-size:12px;font-weight:700;
+  min-width:30px;height:30px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.q-text{font-size:15px;font-weight:500;line-height:1.5;}
+
+/* ANSWER PAGE */
+.answer-page{display:none;min-height:100vh;}
+.answer-page.active{display:block;}
+.answer-container{max-width:780px;margin:0 auto;padding:30px 40px 80px;}
+.answer-meta{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;
+}
+.meta-tag{
+  font-size:12px;font-weight:600;padding:4px 12px;
+  border-radius:999px;letter-spacing:.4px;
+}
+.mt-class{background:rgba(108,99,255,.15);color:#a5b4fc;}
+.mt-board{background:rgba(16,185,129,.12);color:#6ee7b7;}
+.mt-sub{background:rgba(251,191,36,.12);color:#fcd34d;}
+.mt-ch{background:rgba(255,101,132,.12);color:#fca5a5;}
+
+.answer-question{
+  font-family:'Fraunces',serif;
+  font-size:clamp(20px,3vw,28px);font-weight:700;
+  line-height:1.4;margin-bottom:30px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--border);
+}
+.answer-label{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.answer-label::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+.answer-body{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:0 14px 14px 0;
+  padding:24px 28px;
+  font-size:16px;line-height:1.9;
+  color:var(--text);
+  white-space:pre-wrap;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:30px;padding:12px 24px;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:14px;
+  font-weight:600;cursor:pointer;transition:all .2s;
+  font-family:'Outfit',sans-serif;
+}
+.back-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* LOADING SPINNER */
+.spinner{
+  display:flex;justify-content:center;padding:60px;
+}
+.spin{
+  width:36px;height:36px;border:3px solid var(--border);
+  border-top-color:var(--accent);border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* EMPTY STATE */
+.empty{
+  text-align:center;padding:80px 20px;
+  color:var(--muted);
+}
+.empty .ei{font-size:52px;margin-bottom:14px;}
+.empty p{font-size:16px;}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:28px;right:28px;
+  background:#1e293b;color:#fff;
+  padding:12px 20px;border-radius:12px;
+  font-size:14px;font-weight:500;
+  border-left:4px solid var(--accent);
+  opacity:0;transform:translateY(8px);
+  transition:all .3s;pointer-events:none;z-index:999;
+}
+.toast.show{opacity:1;transform:translateY(0);}
+
+@media(max-width:640px){
+  nav{padding:0 20px;}
+  .flow-header,.option-grid,.q-list,.answer-container{padding-left:20px;padding-right:20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">StudyBank</div>
+  <div class="nav-links">
+    <a href="#" onclick="goHome()">Home</a>
+    <a href="/admin.html" class="nav-admin">⚙ Admin</a>
+  </div>
+</nav>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div id="home-page">
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-tag">📚 Class 9 · 10 · 11 · 12 | CBSE · Maharashtra Board</div>
+    <h1>Find Your<br/><span class="grad">Textbook Answers</span><br/>Instantly</h1>
+    <p>Every question. Every exercise. Every chapter. Solved and ready for you.</p>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <input type="text" id="search-input" placeholder="Search any question, chapter, subject..." autocomplete="off"/>
+      <button class="search-icon" onclick="doSearch()">🔍</button>
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <!-- Class Buttons -->
+    <div class="class-label">— Choose your class —</div>
+    <div class="class-grid" id="class-grid">
+      <div class="class-btn" onclick="selectClass('9')">
+        <div class="cb-num">9</div>
+        <div class="cb-label">Class 9</div>
+        <div class="cb-count">CBSE · MH</div>
+      </div>
+      <div class="class-btn" onclick="selectClass('10')">
+        <div class="cb-num">10</div>
+        <div class="cb-label">Class 10</div>
+        <div class="cb-count">CBSE · MH</div>
+      </div>
+      <div class="class-btn" onclick="selectClass('11')">
+        <div class="cb-num">11</div>
+        <div class="cb-label">Class 11</div>
+        <div class="cb-count">CBSE · MH</div>
+      </div>
+      <div class="class-btn" onclick="selectClass('12')">
+        <div class="cb-num">12</div>
+        <div class="cb-label">Class 12</div>
+        <div class="cb-count">CBSE · MH</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════ FLOW PAGE (Board/Subject/Chapter/Exercise/Questions) ══════════ -->
+<div id="flow-page" class="flow-page">
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <div class="flow-header">
+    <div class="flow-title" id="flow-title">Select Board</div>
+    <div class="flow-sub" id="flow-sub"></div>
+  </div>
+  <div id="flow-content"></div>
+</div>
+
+<!-- ══════════ ANSWER PAGE ══════════ -->
+<div id="answer-page" class="answer-page">
+  <div class="breadcrumb" id="answer-breadcrumb"></div>
+  <div class="answer-container" id="answer-container"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── State ──
+const state = { class: '', board: '', subject: '', chapter: '', exercise: '' };
+const ICONS = {
+  board: { 'CBSE': '🏛️', 'Maharashtra Board': '🌟', default: '📋' },
+  subject: { 'Mathematics': '📐', 'Physics': '⚛️', 'Chemistry': '🧪', 'Biology': '🌿', 'English': '📖', 'History': '📜', 'Geography': '🌍', 'Economics': '📊', 'Computer Science': '💻', default: '📚' },
+};
+
+function icon(type, name) { return ICONS[type]?.[name] || ICONS[type]?.default || '📁'; }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Page switching ──
+function showPage(page) {
+  ['home-page','flow-page','answer-page'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.display = 'none';
+    el.classList.remove('active');
+  });
+  const target = document.getElementById(page);
+  target.style.display = 'block';
+  target.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  Object.keys(state).forEach(k => state[k] = '');
+  showPage('home-page');
+}
+
+// ── Breadcrumb ──
+function buildBreadcrumb(containerId) {
+  const steps = [
+    { label: '🏠 Home', action: goHome },
+    state.class && { label: `Class ${state.class}`, action: () => selectClass(state.class) },
+    state.board && { label: state.board, action: () => selectBoard(state.board) },
+    state.subject && { label: state.subject, action: () => selectSubject(state.subject) },
+    state.chapter && { label: `Ch. ${state.chapter}`, action: () => selectChapter(state.chapter) },
+    state.exercise && { label: `Ex. ${state.exercise}`, action: () => selectExercise(state.exercise) },
+  ].filter(Boolean);
+
+  document.getElementById(containerId).innerHTML = steps.map((s, i) => {
+    const isLast = i === steps.length - 1;
+    return `${i > 0 ? '<span class="bc-sep">›</span>' : ''}
+      <span class="bc-item ${isLast ? 'bc-current' : ''}" onclick="${isLast ? '' : `(${s.action.toString()})()`}">${s.label}</span>`;
+  }).join('');
+}
+
+// ── Fetch & Render Options ──
+async function fetchOptions(params) {
+  const url = '/api/structure?' + new URLSearchParams(params);
+  const res = await fetch(url);
+  return res.json();
+}
+
+async function renderOptions(type, items, clickFn) {
+  const container = document.getElementById('flow-content');
+  if (!items.length) {
+    container.innerHTML = `<div class="empty"><div class="ei">🤔</div><p>No content added yet.<br/>Ask admin to add answers!</p></div>`;
+    return;
+  }
+  if (type === 'questions') {
+    container.innerHTML = `<div class="q-list">${items.map((q, i) => `
+      <div class="q-item" onclick="openAnswer('${q.id}')">
+        <div class="q-num">${i+1}</div>
+        <div class="q-text">${q.question}</div>
+      </div>`).join('')}</div>`;
+    return;
+  }
+  container.innerHTML = `<div class="option-grid">${items.map(item => `
+    <div class="opt-card" onclick="${clickFn}('${item.replace(/'/g,"\\'")}')">
+      <div class="opt-icon">${type === 'board' ? icon('board',item) : type === 'subject' ? icon('subject',item) : '📂'}</div>
+      <div>
+        <div class="opt-text">${item}</div>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+// ── Flow steps ──
+async function selectClass(cls) {
+  state.class = cls; state.board = ''; state.subject = ''; state.chapter = ''; state.exercise = '';
+  showPage('flow-page');
+  document.getElementById('flow-title').textContent = `Select Board — Class ${cls}`;
+  document.getElementById('flow-sub').textContent = 'Choose your board to continue';
+  document.getElementById('flow-content').innerHTML = '<div class="spinner"><div class="spin"></div></div>';
+  buildBreadcrumb('breadcrumb');
+  const items = await fetchOptions({ classId: cls });
+  await renderOptions('board', items, 'selectBoard');
+}
+
+async function selectBoard(board) {
+  state.board = board; state.subject = ''; state.chapter = ''; state.exercise = '';
+  document.getElementById('flow-title').textContent = `Select Subject`;
+  document.getElementById('flow-sub').textContent = `${state.board} · Class ${state.class}`;
+  document.getElementById('flow-content').innerHTML = '<div class="spinner"><div class="spin"></div></div>';
+  buildBreadcrumb('breadcrumb');
+  const items = await fetchOptions({ classId: state.class, board });
+  await renderOptions('subject', items, 'selectSubject');
+}
+
+async function selectSubject(subject) {
+  state.subject = subject; state.chapter = ''; state.exercise = '';
+  document.getElementById('flow-title').textContent = `Select Chapter`;
+  document.getElementById('flow-sub').textContent = `${subject} · ${state.board} · Class ${state.class}`;
+  document.getElementById('flow-content').innerHTML = '<div class="spinner"><div class="spin"></div></div>';
+  buildBreadcrumb('breadcrumb');
+  const items = await fetchOptions({ classId: state.class, board: state.board, subject });
+  await renderOptions('chapter', items, 'selectChapter');
+}
+
+async function selectChapter(chapter) {
+  state.chapter = chapter; state.exercise = '';
+  document.getElementById('flow-title').textContent = `Select Exercise`;
+  document.getElementById('flow-sub').textContent = `Chapter ${chapter} · ${state.subject}`;
+  document.getElementById('flow-content').innerHTML = '<div class="spinner"><div class="spin"></div></div>';
+  buildBreadcrumb('breadcrumb');
+  const items = await fetchOptions({ classId: state.class, board: state.board, subject: state.subject, chapter });
+  await renderOptions('exercise', items, 'selectExercise');
+}
+
+async function selectExercise(exercise) {
+  state.exercise = exercise;
+  document.getElementById('flow-title').textContent = `Questions — ${exercise}`;
+  document.getElementById('flow-sub').textContent = `Chapter ${state.chapter} · ${state.subject}`;
+  document.getElementById('flow-content').innerHTML = '<div class="spinner"><div class="spin"></div></div>';
+  buildBreadcrumb('breadcrumb');
+  const items = await fetchOptions({ classId: state.class, board: state.board, subject: state.subject, chapter: state.chapter, exercise });
+  await renderOptions('questions', items, '');
+}
+
+// ── Open Answer ──
+async function openAnswer(id) {
+  showPage('answer-page');
+  document.getElementById('answer-container').innerHTML = '<div class="spinner"><div class="spin"></div></div>';
+  const res = await fetch(`/api/qa/${id}`);
+  const qa = await res.json();
+
+  // update state for breadcrumb
+  state.class = qa.class; state.board = qa.board;
+  state.subject = qa.subject; state.chapter = qa.chapter; state.exercise = qa.exercise;
+  buildBreadcrumb('answer-breadcrumb');
+
+  document.getElementById('answer-container').innerHTML = `
+    <div class="answer-meta">
+      <span class="meta-tag mt-class">Class ${qa.class}</span>
+      <span class="meta-tag mt-board">${qa.board}</span>
+      <span class="meta-tag mt-sub">${qa.subject}</span>
+      <span class="meta-tag mt-ch">Ch. ${qa.chapter} · ${qa.exercise}</span>
+    </div>
+    <div class="answer-question">${qa.question}</div>
+    <div class="answer-label">Answer</div>
+    <div class="answer-body">${qa.answer}</div>
+    <button class="back-btn" onclick="selectExercise('${qa.exercise.replace(/'/g,"\\'")}')">← Back to Questions</button>
+  `;
+}
+
+// ── Search ──
+let searchTimer;
+document.getElementById('search-input').addEventListener('input', function() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(doSearch, 300);
+});
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) {
+    document.getElementById('search-results').classList.remove('open');
+  }
+});
+
+async function doSearch() {
+  const q = document.getElementById('search-input').value.trim();
+  const box = document.getElementById('search-results');
+  if (q.length < 2) { box.classList.remove('open'); return; }
+  box.innerHTML = '<div class="sr-none">Searching...</div>';
+  box.classList.add('open');
+  const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+  const results = await res.json();
+  if (!results.length) {
+    box.innerHTML = '<div class="sr-none">No results found. Try different keywords.</div>';
+    return;
+  }
+  box.innerHTML = results.map(r => `
+    <div class="sr-item" onclick="openAnswer('${r.id}');document.getElementById('search-results').classList.remove('open')">
+      <div class="sr-q">${r.question}</div>
+      <div class="sr-meta">Class ${r.class} · ${r.board} · ${r.subject} · Ch. ${r.chapter} · ${r.exercise}</div>
+    </div>`).join('');
+}
+
+// Init
+showPage('home-page');
+</script>
+</body>
+</html>
